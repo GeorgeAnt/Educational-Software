@@ -15,6 +15,9 @@ class Chapter {
     @NotNull
     String chapterName
 
-    @Column
+    /**
+     * Lob is the equivelent of type text(VARCHAR(MAX)) in Postgresql
+     **/
+    @Lob
     String chapterTheory
 }

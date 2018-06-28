@@ -4,10 +4,9 @@ import com.atl.edusoftware.data.model.Answer
 import com.atl.edusoftware.data.model.Question
 import com.atl.edusoftware.data.repository.AnswerRepository
 import com.atl.edusoftware.data.repository.QuestionRepository
+import com.atl.edusoftware.web.TestRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
-import javax.servlet.http.HttpServletRequest
 
 @Service
 class EditService {
@@ -18,37 +17,38 @@ class EditService {
     @Autowired
     AnswerRepository answerRepository
 
-    void addTest(HttpServletRequest request) {
+    void addTest(TestRequest request) {
 
-
-        Question question = new Question()
-        question.chapterId = request.getParameter('chapter-id') as int
-        question.questionText = request.getParameter('question') as String
+        Question question = ['questionText': request.questionText, 'chapterId': request.chapterNumber as int]
         questionRepository.save(question)
-        Question question1 = questionRepository.findFirstByOrderByIdDesc()
+
         Answer answer1 = [
-                'isCorrect' : false,
-                'answerText': request.getParameter('answer-1').toString(),
-                'questionId': question1.id
+                'isCorrect' : request.isAnswer1Correct,
+                'answerText': request.answerText1,
+                'questionId': question
         ]
+
         Answer answer2 = [
-                'isCorrect' : false,
-                'answerText': request.getParameter('answer-2').toString(),
-                'questionId': question1.id
+                'isCorrect' : request.isAnswer2Correct,
+                'answerText': request.answerText2,
+                'questionId': question
         ]
+
         Answer answer3 = [
-                'isCorrect' : false,
-                'answerText': request.getParameter('answer-3').toString(),
-                'questionId': question1.id
+                'isCorrect' : request.isAnswer3Correct,
+                'answerText': request.answerText3,
+                'questionId': question
         ]
         Answer answer4 = [
-                'isCorrect' : true,
-                'answerText': request.getParameter('answer-4').toString(),
-                'questionId': question1.id
+                'isCorrect' : request.isAnswer4Correct,
+                'answerText': request.answerText4,
+                'questionId': question
         ]
-        Question question2 = questionRepository.findOne(question1.id)
-        question1.answers = [answer1, answer2, answer3, answer4]
-        questionRepository.save(question2)
+
+        List<Answer> answerList = [answer1, answer2, answer3, answer4]
+        answerList.each { answer ->
+            answerRepository.save(answer)
+        }
     }
 
 }
