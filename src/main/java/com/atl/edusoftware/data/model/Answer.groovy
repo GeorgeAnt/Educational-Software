@@ -17,7 +17,6 @@ class Answer {
     @Column(name = "is_correct")
     Boolean isCorrect
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", nullable = false)
     @JsonBackReference

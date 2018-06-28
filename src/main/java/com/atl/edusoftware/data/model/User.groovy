@@ -21,8 +21,6 @@ class User {
     String email
 
     @Column(name = "password")
-//    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#\$&*])(?=.*[0-9]).{8,16}\$",
-//            message = "Provide a Strong Password between 8-16 characters(Including a capital letter, a number and a special character)")
     @Length(min = 8, message = "*Your password must have at least 8 characters")
     @NotEmpty(message = "Provide a password")
     String password

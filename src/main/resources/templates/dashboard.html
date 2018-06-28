@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:include="layout :: htmlhead"></head>
 
 <body>
@@ -8,12 +9,27 @@
 <section id="dashboard" class="wrapper">
 
     <div class="text-center well card col-12 col-md-7 col-xl-4 m-auto">
-        <h2 class="display-5" th:text="#{dashboard.title}"></h2>
-        <p class="text-info" th:text="#{dashboard.label}"></p>
+        <th:block th:if="${result == null}">
+            <h2 class="display-5" th:text="#{dashboard.title}"></h2>
+            <p class="text-info" th:text="#{dashboard.label}"></p>
+        </th:block>
+        <th:block th:if="${result != null}">
+            <p th:text="#{result.message(${result})}"></p>
+            <p th:text="${resultMessage}"></p>
+        </th:block>
         <div class="btn-group-vertical" role="group">
             <a th:href="@{/tests}" type="button" class="btn btn-info btn-lg my-1" th:text="#{dashboard.tests}"></a>
             <a th:href="@{/theory}" type="button" class="btn btn-info btn-lg my-1" th:text="#{dashboard.theory}"></a>
             <a th:href="@{/stats}" type="button" class="btn btn-info btn-lg mt-1 mb-5" th:text="#{dashboard.stats}"></a>
+
+            <th:block th:if="${#strings.trim(role) == 'PROFESSOR'}">
+                <a th:href="@{/edit/tests}" type="button"
+                   class="btn btn-info btn-lg mt-1  professor"
+                   th:text="#{dashboard.edit.tests}"></a>
+                <a th:href="@{/edit/theory}" type="button"
+                   class="btn btn-info btn-lg mt-1 professor mb-5"
+                   th:text="#{dashboard.edit.theory}"></a>
+            </th:block>
         </div>
     </div>
 

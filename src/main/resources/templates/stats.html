@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead"></head>
+
+<body>
+<nav th:include="layout :: navbar"></nav>
+
+<section class="wrapper text-center">
+    <h2 class="display-5" th:text="#{stats.title}"></h2>
+    <div class="col-12 col-md-8 col-xl-6 m-auto">
+        <table class="table table-dark table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{stats.chapter}"></th>
+                <th scope="col" th:text="#{stats.score}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="result : ${statResults}">
+                <td th:text="${T(com.atl.edusoftware.commons.Maps).CHAPTERS[result.chapterId]}"></td>
+                <td th:text="${result.studentStats}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<div th:include="layout :: footer"></div>
+</body>
+</html>

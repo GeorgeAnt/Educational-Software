@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead"></head>
+
+<body>
+<nav th:include="layout :: navbar"></nav>
+
+<section class="wrapper">
+    <div class="container">
+        <h2 class="text-center display-4" th:text="#{edit.theory.title}"></h2>
+        <form class="text-center well card col-12 col-md-7 col-xl-4 m-auto">
+            <label>Choose a Chapter:</label>
+            <select class="chapter" name="chapter">
+                <option th:each="chapter : ${T(com.atl.edusoftware.commons.Maps).CHAPTERS}"
+                        th:text="${chapter.value}"
+                        th:field="${chapter.key}">
+                </option>
+            </select>
+            <label>Question</label>
+            <input name="question"/>
+
+            <label>Answer 1</label>
+            <input name="answer-1"/>
+
+            <label>Answer 2</label>
+            <input name="answer-2"/>
+
+            <label>Answer 3</label>
+            <input name="answer-3"/>
+
+            <label>Answer 4</label>
+            <input name="answer-4"/>
+        </form>
+    </div>
+    </div>
+</section>
+<div th:include="layout :: footer"></div>
+</body>
+</html>

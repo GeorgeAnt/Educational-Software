@@ -2,6 +2,23 @@ INSERT INTO public.role (role_id, role) VALUES (1, 'ADMIN');
 INSERT INTO public.role (role_id, role) VALUES (2, 'PROFESSOR');
 INSERT INTO public.role (role_id, role) VALUES (3, 'STUDENT');
 
+INSERT INTO public.chapter (chapter_id, chapter_name, chapter_theory) VALUES (0, 'Vocabulary', 'There are many variations of passages of Lorem Ipsum available');
+INSERT INTO public.chapter (chapter_id, chapter_name, chapter_theory) VALUES (1, 'Grammar', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters');
+INSERT INTO public.chapter (chapter_id, chapter_name, chapter_theory) VALUES (2, 'Writing', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
+
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (1, 0, 0, 1);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (2, 1, 66.67, 1);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (3, 1, 50, 2);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (4, 1, 50, 2);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (5, 1, 50, 3);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (6, 2, 100, 3);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (7, 0, 100, 3);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (8, 0, 100, 4);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (9, 3, 33.33, 3);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (10, 3, 55, 2);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (11, 3, 66, 4);
+INSERT INTO public.logs (id, chapter_id, student_stats, user_id) VALUES (12, 3, 66.67, 1);
+
 --Chapter 0 Vocabulary questions
 INSERT INTO public.question (id, question_text, chapter_id)
 VALUES (default, 'The author died after a ______ illness.', 0);
