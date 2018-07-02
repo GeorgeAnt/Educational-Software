@@ -1,39 +1,79 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head th:include="layout :: htmlhead"></head>
 
 <body>
-<nav th:include="layout :: navbar"></nav>
+<div th:include="header :: navbar"></div>
 
 <section id="dashboard" class="wrapper">
 
-    <div class="text-center well card col-12 col-md-7 col-xl-4 m-auto">
+    <div class="text-center well card col-12 col-md-7 col-xl-4 mx-auto my-5">
         <th:block th:if="${result == null}">
             <h2 class="display-5" th:text="#{dashboard.title}"></h2>
             <p class="text-info" th:text="#{dashboard.label}"></p>
         </th:block>
-        <th:block th:if="${result != null}">
-            <p th:text="#{result.message(${result})}"></p>
+        <th:block th:if="${score != null}">
+            <p th:text="#{score.message(${score})}"></p>
             <p th:text="${resultMessage}"></p>
         </th:block>
         <div class="btn-group-vertical" role="group">
             <a th:href="@{/tests}" type="button" class="btn btn-info btn-lg my-1" th:text="#{dashboard.tests}"></a>
-            <a th:href="@{/theory}" type="button" class="btn btn-info btn-lg my-1" th:text="#{dashboard.theory}"></a>
-            <a th:href="@{/stats}" type="button" class="btn btn-info btn-lg mt-1 mb-5" th:text="#{dashboard.stats}"></a>
+            <a th:href="@{/stats}" type="button" class="btn btn-info btn-lg my-1" th:text="#{dashboard.stats}"></a>
+            <button class="btn btn-info btn-lg dropdown-toggle mt-1 mb-5" type="button"
+                    id="dropdownStudentChapterButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    th:text="#{dashboard.theory}">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownStudentChapterButton">
+                <th:block th:each="chapter : ${T(com.atl.edusoftware.commons.Maps).CHAPTERS}">
+                    <th:block th:unless="${chapter.key == 3}">
+                        <a class="dropdown-item" th:href="@{/theory(chapterId = ${chapter.key})}"
+                           th:text="${chapter.value}"></a>
+                    </th:block>
+                </th:block>
+            </div>
 
-            <th:block th:if="${#strings.trim(role) == 'PROFESSOR'}">
-                <a th:href="@{/edit/tests}" type="button"
-                   class="btn btn-info btn-lg mt-1  professor"
-                   th:text="#{dashboard.edit.tests}"></a>
-                <a th:href="@{/edit/theory}" type="button"
-                   class="btn btn-info btn-lg mt-1 professor mb-5"
-                   th:text="#{dashboard.edit.theory}"></a>
+            <th:block sec:authorize="hasAuthority('PROFESSOR')">
+                <a th:href="@{/edit/addQuestion}" type="button" class="btn btn-info btn-lg mt-1"
+                   th:text="#{dashboard.questions.add}"></a>
+
+                <!--<a th:href="@{/edit/questions}" type="button" class="btn btn-info btn-lg mt-1" th:text="#{dashboard.edit.tests}"></a>-->
+                <div class="w-100">
+                    <button class="btn btn-info btn-lg dropdown-toggle my-1" type="button"
+                            id="dropdownChapterEditButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            th:text="#{dashboard.edit.tests}">
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownChapterEditButton">
+                        <th:block th:each="chapter : ${T(com.atl.edusoftware.commons.Maps).CHAPTERS}">
+                            <th:block th:unless="${chapter.key == 3}">
+                                <a class="dropdown-item" th:href="@{/edit/questions(chapterId = ${chapter.key})}"
+                                   th:text="${chapter.value}"></a>
+                            </th:block>
+                        </th:block>
+                    </div>
+                </div>
+
+                <button class="btn btn-info btn-lg mt-1 dropdown-toggle mb-5" type="button"
+                        id="dropdownChapterButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        th:text="#{dashboard.edit.theory}">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownChapterButton">
+                    <th:block th:each="chapter : ${T(com.atl.edusoftware.commons.Maps).CHAPTERS}">
+                        <th:block th:unless="${chapter.key == 3}">
+                            <a class="dropdown-item" th:href="@{/theory(chapterId = ${chapter.key})}"
+                               th:text="${chapter.value}"></a>
+                        </th:block>
+                    </th:block>
+                </div>
             </th:block>
         </div>
     </div>
 
 </section>
-<div th:include="layout :: footer"></div>
+
 </body>
 </html>

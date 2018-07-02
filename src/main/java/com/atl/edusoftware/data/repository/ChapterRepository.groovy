@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ChapterRepository extends CrudRepository<Chapter, Integer> {
-    Chapter findByChapterId(Integer chapterId)
+
 }

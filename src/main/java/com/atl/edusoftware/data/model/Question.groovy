@@ -15,8 +15,9 @@ class Question {
     @Column(name = "question_text")
     String questionText
 
-    @Column(name = "chapter_id")
-    int chapterId
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chapter_id")
+    Chapter chapter
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "questionId")
     @JsonManagedReference

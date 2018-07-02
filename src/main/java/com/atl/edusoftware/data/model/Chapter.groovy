@@ -15,9 +15,12 @@ class Chapter {
     @NotNull
     String chapterName
 
-    /**
-     * Lob is the equivelent of type text(VARCHAR(MAX)) in Postgresql
-     **/
-    @Lob
+    @Column
+    Double averageScore = 0.0
+
+    @Column(columnDefinition = "TEXT")
     String chapterTheory
+
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    List<Question> questions
 }

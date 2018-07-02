@@ -42,12 +42,14 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/tests").permitAll()
-                .antMatchers("/dashboard").permitAll()
-                .antMatchers("/theory").permitAll()
-                .antMatchers("/stats").permitAll()
+                .antMatchers("/tests").authenticated()
+                .antMatchers("/dashboard").authenticated()
+                .antMatchers("/theory").authenticated()
+                .antMatchers("/stats").authenticated()
                 .antMatchers("/edit/**").hasAuthority("PROFESSOR")
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
@@ -64,15 +66,14 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          **/
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .maximumSessions(2)
+                .maximumSessions(1) //Prevent a user from login multiple times per session
                 .expiredUrl("/login")
 
     }
 
     @Override
     void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/*.css")
-        web.ignoring().antMatchers("/*.js")
+        web.ignoring().antMatchers("/static/**")
     }
 
     @Bean

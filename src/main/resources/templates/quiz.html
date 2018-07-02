@@ -1,17 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="layout :: htmlhead"></head>
 
 <body>
-<nav th:include="layout :: navbar"></nav>
+<div th:fragment="navbar">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top"><a class="navbar-brand" href="/"
+                                                                          th:text="#{nav.home}">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ml-auto">
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item"><a class="nav-link" href="/logout" th:text="#{nav.logout}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dashboard" th:text="#{nav.dashboard}"></a></li>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item"><a class="nav-link" href="/login" th:text="#{nav.login}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/registration" th:text="#{nav.register}"></a></li>
+                </th:block>
+            </ul>
+        </div>
+    </nav>
+</div>
 
 <section id="register" class="wrapper">
-
-    <form class="form-control card col-12 col-md-7 col-xl-5 m-auto" style="background-color: azure;"
-          th:action="@{/dashboard}" method="post">
+    <form id="quizForm" class="form-control card col-12 col-md-7 col-xl-5 mx-auto my-5" style="background-color: azure;"
+          th:action="@{/logs/quizResults(chapterId=${chapterId})}" method="post">
         <h4 class="text-center" th:utext="#{test.chapter.name(${chapterName})}"></h4>
         <ul class="list-group">
-            <li class="list-group-item" style="background-color: #dadada;" th:each="question :${questions}">
+            <li class="list-group-item" th:each="question :${questions}">
                 <p th:text="${question.questionText}"></p>
                 <div class="form-check" th:each="answer : ${question.answers}">
                     <input class="form-check-input" type="radio" th:value="${answer.isCorrect}"
@@ -20,9 +39,11 @@
                 </div>
             </li>
         </ul>
+        <em id="error-incomplete-quiz" th:text="#{error.incomplete.quiz}" style="display: none;color: red;"></em>
         <button class="btn btn-lg btn-primary btn-block mb-3 mx-auto col-md-4 col-8 mt-1" type="submit">Submit</button>
     </form>
 </section>
-<div th:include="layout :: footer"></div>
+
 </body>
+<script th:src="@{/js/quiz.js}"></script>
 </html>

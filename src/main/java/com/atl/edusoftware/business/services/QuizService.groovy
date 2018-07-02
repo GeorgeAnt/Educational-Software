@@ -1,6 +1,8 @@
 package com.atl.edusoftware.business.services
 
+import com.atl.edusoftware.data.model.Chapter
 import com.atl.edusoftware.data.model.Question
+import com.atl.edusoftware.data.repository.ChapterRepository
 import com.atl.edusoftware.data.repository.QuestionRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -9,24 +11,28 @@ import javax.servlet.http.HttpServletRequest
 import java.text.DecimalFormat
 
 @Service
-class TestsService {
+class QuizService {
 
     @Autowired
     private QuestionRepository questionRepository
+
+    @Autowired
+    private ChapterRepository chapterRepository
 
     Iterable<Question> findAll() {
         return questionRepository.findAll()
     }
 
     List<Question> getQuizByChapterId(int chapterId) {
-        return questionRepository.findFirst3ByChapterId(chapterId)
+        Chapter chapter = chapterRepository.findOne(chapterId)
+        return questionRepository.findFirst3ByChapter(chapter)
     }
 
     List<Question> getQuestionsInRandomOrder() {
         return questionRepository.findQuestionsInRandomOrder()
     }
 
-    Double getResults(HttpServletRequest request) {
+    static Double getResults(HttpServletRequest request) {
         def count = 0
         def total = 0
         DecimalFormat decimalFormat = new DecimalFormat("####0.00")

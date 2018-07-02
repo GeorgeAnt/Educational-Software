@@ -20,5 +20,9 @@ class Logs {
     Integer chapterId
 
     @Column
-    Double studentStats
+    Double testStats
+
+    @Column
+    Boolean isTheoryRead = false
+
 }

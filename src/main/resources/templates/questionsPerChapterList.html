@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="layout :: htmlhead"></head>
+
+<body>
+<div th:include="header :: navbar"></div>
+
+<section id="editQuestion" class="mt-1">
+    <h2 class="display-5 my-4 mb-4 text-center" th:text="#{edit.delete.question.title}"></h2>
+    <h4 class="display-5 my-4 mb-4 text-center" th:text="#{edit.delete.question.info}"></h4>
+
+    <!--/*@thymesVar id="questions" type="com.atl.edusoftware.data.model.Question"*/-->
+    <!--/*@thymesVar id="questionList" type="com.atl.edusoftware.data.model.Question"*/-->
+    <form class="col-sm-11 mx-auto" th:each="question,iter : ${questionList}"
+          th:action="@{/edit/question(questionId=${question.id})}" method="post">
+        <div class="list-group-item">
+            <p th:text="${iter.index + 1}"></p>
+            <p th:text="${question.questionText}"></p>
+            <div class="form-check" th:each="answer,iter2 : ${question.answers}">
+                <p th:text="${iter2.index + 1}+'. '+${answer.answerText}"></p>
+                <!--<input class="form-check-input" type="radio" th:value="${answer.isCorrect}"-->
+                <!--th:id="${question.id}" th:name="${question.id}"/>-->
+                <!--<label class="for-check-label" th:text="${answer.answerText}" th:for="${question.id}"></label>-->
+            </div>
+            <button id="editQuiz" type="submit" class="btn btn-primary" th:text="#{button.edit}" name="edit"></button>
+            <button id="deleteQuiz" type="submit" class="btn btn-danger" th:text="#{button.delete}"
+                    name="delete"></button>
+        </div>
+    </form>
+</section>
+
+</body>
+<script th:src="@{/js/addQuestion.js}"></script>
+</html>

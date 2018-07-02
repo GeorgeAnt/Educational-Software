@@ -1,6 +1,6 @@
 package com.atl.edusoftware.web.controller
 
-import com.atl.edusoftware.business.services.TestsService
+import com.atl.edusoftware.business.services.QuizService
 import com.atl.edusoftware.commons.Maps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession
 class TestsController {
 
     @Autowired
-    TestsService testsService
+    QuizService testsService
 
     @GetMapping
     String Tests() {

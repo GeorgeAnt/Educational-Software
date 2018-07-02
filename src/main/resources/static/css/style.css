@@ -1,0 +1,39 @@
+.container-fluid {
+    padding: 0;
+}
+
+#copyright {
+    background-color: #343a40;
+    padding: 20px 0 !important;
+}
+
+section {
+    padding: 50px 0;
+}
+
+.form-signin {
+    background-color: #d2d2d2;
+}
+
+.match {
+    border-color: green;
+    background-color: #b5e6b5;
+    color: black;
+}
+
+.mismatch {
+    border-color: red;
+    background-color: #e8b7b2;
+    color: black;
+}
+
+body {
+    background-color: darkgray !important;
+}
+
+.correct-answer-group {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+    position: relative;
+}

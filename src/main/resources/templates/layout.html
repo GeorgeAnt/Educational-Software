@@ -7,66 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="author" content="George Antoniadis"/>
     <title>Educational Software</title>
-
     <link rel='stylesheet prefetch'
           th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css}"/>
     <link rel='stylesheet prefetch'
           th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"/>
-    <link th:href="@{../style.css}" media="screen" rel="stylesheet" type="text/css"/>
-</head>
+    <link th:href="@{/css/style.css}" media="screen" rel='stylesheet prefetch' type="text/css"/>
 
-<div th:fragment="navbar">
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
-        <a class="navbar-brand" href="/" th:text="#{nav.home}">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login" th:text="#{nav.login}"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/registration" th:text="#{nav.register}"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboard" th:text="#{nav.dashboard}"></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.js}"></script>
+</head>
+<body>
 
 <div th:fragment="status">
     <div id="error" th:if="${!#strings.isEmpty(errors)}">
         <div class="alert alert-block alert-warning">
             <button class="close" data-dismiss="alert">&#215;</button>
-            <strong th:utext="#{error.title}">Error</strong>
-            <span th:utext="${#messages.msgOrNull(error) == null ? error : #messages.msgOrNull(error)}">This is an error.</span>
+            <span th:utext="${#messages.msgOrNull(error) == null ? error : #messages.msgOrNull(error)}"></span>
         </div>
     </div>
 
     <div th:if="${!#strings.isEmpty(success)}">
         <div class="alert alert-block alert-success">
             <button class="close" data-dismiss="alert">&#215;</button>
-            <strong th:utext="#{success.title}">Success</strong>
-            <span th:utext="${#messages.msgOrNull(success) == null ? success : #messages.msgOrNull(success)}">This is a success.</span>
+            <span th:utext="${#messages.msgOrNull(success) == null ? success : #messages.msgOrNull(success)}"></span>
         </div>
     </div>
 </div>
 
-<div th:fragment="footer">
-    <footer id="copyright" class="fixed-bottom py-3">
-        <div class="copyright text-center text-white">
-            <div class="container">
-                <small>Copyright © Antoniadis and Tzoumas 2018</small>
-            </div>
-        </div>
-    </footer>
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js}"></script>
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.js}"></script>
-</div>
-
+</body>
 </html>

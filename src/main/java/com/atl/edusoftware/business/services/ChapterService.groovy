@@ -14,4 +14,16 @@ class ChapterService {
     Iterable<Chapter> getAllChapterData() {
         return chapterRepository.findAll()
     }
+
+    Chapter getChapterById(int chapterId) {
+        return chapterRepository.findOne(chapterId)
+    }
+
+    void saveChapter(Chapter chapter) {
+        chapterRepository.save(chapter)
+    }
+
+    void deleteChapter(Chapter chapter) {
+        chapterRepository.delete(chapter)
+    }
 }

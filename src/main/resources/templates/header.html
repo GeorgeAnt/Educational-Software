@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:include="layout :: htmlhead"></head>
-
 <body>
 <div th:fragment="navbar">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top"><a class="navbar-brand" href="/"
@@ -24,23 +22,6 @@
         </div>
     </nav>
 </div>
-
-<!--/*@thymesVar id="chapter" type="com.atl.edusoftware.data.model.Chapter"*/-->
-<section class="wrapper">
-    <div th:unless="${chapter.chapterId == 3}" class="card bg-light mb-3 col-12 col-md-10 col-xl-8 m-auto">
-        <div class="card-header" th:text="${chapter.chapterName}"></div>
-        <div class="card-body">
-            <p class="card-text" th:text="${chapter.chapterTheory}"></p>
-        </div>
-        <div class="row">
-            <!--/*@thymesVar id="log" type="com.atl.edusoftware.data.model.Logs"*/-->
-            <a th:style="${log?.isTheoryRead ?: false}? 'display:none' : 'display:block'"
-               th:href="@{/logs/changeReadStatus(chapterId=${chapter.chapterId},isTheoryRead=true)}"
-               class="btn btn-lg btn-primary btn-block my-1 ml-1 col-md-3 col-2">Finished Theory</a>
-            <a th:href="@{/dashboard}" class="btn btn-lg btn-primary btn-block my-1 ml-1 col-md-2 col-1">Dahsboard</a>
-        </div>
-    </div>
-</section>
 
 </body>
 </html>

@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="layout :: htmlhead"></head>
 
 <body>
-<nav th:include="layout :: navbar"></nav>
+<div th:fragment="navbar">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top"><a class="navbar-brand" href="/"
+                                                                          th:text="#{nav.home}">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ml-auto">
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item"><a class="nav-link" href="/logout" th:text="#{nav.logout}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dashboard" th:text="#{nav.dashboard}"></a></li>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item"><a class="nav-link" href="/login" th:text="#{nav.login}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/registration" th:text="#{nav.register}"></a></li>
+                </th:block>
+            </ul>
+        </div>
+    </nav>
+</div>
 
 <section class="wrapper">
     <div class="container">
@@ -13,6 +33,7 @@
         </div>
     </div>
 </section>
-<div th:include="layout :: footer"></div>
+
+
 </body>
 </html>

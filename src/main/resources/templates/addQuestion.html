@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
 <head th:include="layout :: htmlhead"></head>
 
 <body>
-<nav th:include="layout :: navbar"></nav>
+<div th:include="header :: navbar"></div>
 
-<section class="wrapper">
-    <form class="col-sm-11" th:object="${testRequest}" th:action="@{/edit/tests}" method="post">
+<section id="addQuestion" class="wrapper mt-2 text-center">
+    <h2 class="display-5 my-4 mb-4 mx-auto" th:text="#{add.question.title}"></h2>
+    <!--/*@thymesVar id="testRequest" type="com.atl.edusoftware.web.TestRequest"*/-->
+    <form class="col-sm-11" th:object="${testRequest}" th:action="@{/edit/addQuestion}" method="post">
         <div class="form-group row">
             <label th:for="*{questionText}" class="col-sm-2 col-form-label">Question:</label>
             <div class="col-sm-10">
@@ -19,7 +22,7 @@
                 <input type="text" class="form-control" th:field="*{answerText1}" placeholder="First answer"/>
             </div>
             <div class="col-1">
-                <input type="checkbox" class="correct-answer-group" th:field="*{isAnswer1Correct}"/>
+                <input type="checkbox" class="correct-answer-group form-check-input" th:field="*{isAnswer1Correct}"/>
             </div>
         </div>
         <div class="form-group row">
@@ -28,7 +31,7 @@
                 <input type="text" class="form-control" th:field="*{answerText2}" placeholder="Second Answer"/>
             </div>
             <div class="col-1">
-                <input type="checkbox" class="correct-answer-group" th:field="*{isAnswer2Correct}"/>
+                <input type="checkbox" class="correct-answer-group form-check-input" th:field="*{isAnswer2Correct}"/>
             </div>
         </div>
         <div class="form-group row">
@@ -37,7 +40,7 @@
                 <input type="text" class="form-control" th:field="*{answerText3}" placeholder="Third answer"/>
             </div>
             <div class="col-1">
-                <input type="checkbox" class="correct-answer-group" th:field="*{isAnswer3Correct}"/>
+                <input type="checkbox" class="correct-answer-group form-check-input" th:field="*{isAnswer3Correct}"/>
             </div>
         </div>
         <div class="form-group row">
@@ -46,7 +49,7 @@
                 <input type="text" class="form-control" th:field="*{answerText4}" placeholder="Fourth answer"/>
             </div>
             <div class="col-1">
-                <input type="checkbox" class="correct-answer-group" th:field="*{isAnswer4Correct}"/>
+                <input type="checkbox" class="correct-answer-group form-check-input" th:field="*{isAnswer4Correct}"/>
             </div>
         </div>
         <div class="form-group row">
@@ -54,16 +57,21 @@
             <select class="form-control col-sm-4 ml-3" th:field="*{chapterNumber}">
                 <option th:each="chapter : ${T(com.atl.edusoftware.commons.Maps).CHAPTERS}"
                         th:text="${chapter.value}"
-                        th:value="${chapter.key}">
+                        th:value="${chapter.key}"
+                        th:unless="${chapter.key} == 3">
                 </option>
             </select>
         </div>
-        <button id="editQuizSubmit" type="submit" class="btn btn-primary col-3 mx-auto my-5">Sign in</button>
-
+        <input type="hidden" th:field="*{questionId}"/>
+        <input type="hidden" th:field="*{answerId1}"/>
+        <input type="hidden" th:field="*{answerId2}"/>
+        <input type="hidden" th:field="*{answerId3}"/>
+        <input type="hidden" th:field="*{answerId4}"/>
+        <button id="addQuiz" type="submit" class="btn btn-primary col-3 mx-auto my-5"
+                th:text="#{button.submit}" name="add"></button>
     </form>
 </section>
 
-<div th:include="layout :: footer"></div>
 </body>
-<script th:src="@{/js/editQuiz.js}"></script>
+<script th:src="@{/js/addQuestion.js}"></script>
 </html>

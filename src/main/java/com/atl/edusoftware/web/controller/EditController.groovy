@@ -1,52 +1,113 @@
 package com.atl.edusoftware.web.controller
 
-import com.atl.edusoftware.business.services.EditService
+import com.atl.edusoftware.business.services.ChapterService
+import com.atl.edusoftware.business.services.LogsService
+import com.atl.edusoftware.business.services.QuestionService
+import com.atl.edusoftware.business.services.QuizService
+import com.atl.edusoftware.data.model.Chapter
 import com.atl.edusoftware.web.TestRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
-
-import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping(value = '/edit')
 class EditController {
 
     @ModelAttribute("testRequest")
-    TestRequest createPendingMerchantsRequest() {
+    TestRequest testRequest() {
         return new TestRequest()
     }
 
+    @ModelAttribute("chapterRequest")
+    Chapter chapter() {
+        return new Chapter()
+    }
+
     @Autowired
-    EditService editService
+    QuestionService editService
 
-    @GetMapping(value = '/tests')
-    String getEditTest() {
-        return 'editQuiz'
+    @Autowired
+    ChapterService chapterService
+
+    @Autowired
+    QuizService quizService
+
+    @Autowired
+    LogsService logsService
+
+    @Autowired
+    QuestionService questionService
+
+    @GetMapping(value = '/addQuestion')
+    ModelAndView getAddQuestion() {
+        ModelAndView modelAndView = new ModelAndView()
+        modelAndView.setViewName('addQuestion')
+        modelAndView.addObject('questions', quizService.findAll())
+        return modelAndView
     }
 
-    @GetMapping(value = '/theory')
-    String getEditTheory() {
-        return 'editTheory'
-    }
-
-    @PostMapping(value = '/tests')
-    ModelAndView addTest(
-            @ModelAttribute("testRequest") TestRequest testRequest, HttpServletRequest request) {
+    @PostMapping(value = '/addQuestion')
+    ModelAndView addQuestion(
+            @ModelAttribute("testRequest") TestRequest testRequest) {
         ModelAndView modelAndView = new ModelAndView()
         editService.addTest(testRequest)
         modelAndView.setViewName("dashboard")
-        modelAndView.addObject('success', 'Your quiz have being successfully imported')
+        modelAndView.addObject('success', 'Your question have being successfully imported')
+        return modelAndView
+    }
+
+    @GetMapping(value = '/questions', params = ["chapterId"])
+    ModelAndView getQuestionsToEdit(@RequestParam("chapterId") int chapterId) {
+        ModelAndView modelAndView = new ModelAndView()
+        modelAndView.setViewName('questionsPerChapterList')
+        modelAndView.addObject('questionList', quizService.getQuizByChapterId(chapterId))
+        return modelAndView
+    }
+
+    @PostMapping(value = '/question', params = ["edit"])
+    ModelAndView getEditQuestionView(@RequestParam("questionId") Long questionId) {
+        ModelAndView modelAndView = new ModelAndView()
+        modelAndView.setViewName('questionsPerChapterList')
+        modelAndView.addObject('testRequest', questionService.getTestRequestByQuestionId(questionId))
+        return modelAndView
+    }
+
+    @PostMapping(value = '/question', params = ["delete"])
+    ModelAndView deleteQuestion(@RequestParam("questionId") Long questionId) {
+        ModelAndView modelAndView = new ModelAndView()
+        try {
+            questionService.deleteQuestion(questionId)
+        } catch (Exception e) {
+            modelAndView.addObject('error', 'Something went Wrong')
+            modelAndView.setViewName('dashboard')
+            return modelAndView
+        }
+        modelAndView.setViewName('dashboard')
+        modelAndView.addObject('success', 'Your question has being successfully deleted')
+        return modelAndView
+    }
+
+    @GetMapping(value = '/theory', params = ["chapterId"])
+    ModelAndView getEditTheoryView(@RequestParam("chapterId") int chapterId) {
+        ModelAndView modelAndView = new ModelAndView()
+        modelAndView.setViewName("editTheory")
+        modelAndView.addObject('chapter', chapterService.getChapterById(chapterId))
         return modelAndView
     }
 
     @PostMapping(value = '/theory')
-    String addTheory() {
-        return 'dashboard'
+    ModelAndView addTheory(@ModelAttribute("chapterRequest") Chapter chapter, Model model) {
+        try {
+            chapterService.saveChapter(chapter)
+        } catch (Exception e) {
+            model.addAttribute('error', 'Something went Wrong')
+            return new ModelAndView('redirect:/dashboard', model)
+        }
+        model.addAttribute('success', 'Your edit was successful!')
+        return new ModelAndView('dashboard', model)
     }
 
 }
