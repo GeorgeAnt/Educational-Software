@@ -37,7 +37,8 @@ class LogsController {
             @RequestParam("isTheoryRead") boolean isTheoryRead, Principal principal) {
         ModelAndView modelAndView = new ModelAndView()
         User user = userService.findUserByEmail(principal.name)
-        Logs log = ['chapterId': chapterId, 'userId': user.id, 'isTheoryRead': isTheoryRead]
+        Logs log = logsService.getLogByUserIdAndChapterId(user.id, chapterId)
+        log.isTheoryRead = isTheoryRead ?: false
         logsService.insertOrUpdateOnLogs(log)
 
         modelAndView.setViewName("dashboard")
@@ -52,7 +53,6 @@ class LogsController {
         //TODO better practice would be user id to populated in session on login. try https://stackoverflow.com/questions/24882007/populate-user-session-after-login if we got time.
         User user = userService.findUserByEmail(principal.name)
         int chapterId = session?.getAttribute('chapterId') as int
-
         Logs log = ['chapterId': chapterId, 'testStats': score, 'userId': user.id]
         Result result = logsService.handleResults(log)
         logsService.insertOrUpdateOnLogs(log)

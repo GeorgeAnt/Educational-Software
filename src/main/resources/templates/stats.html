@@ -33,6 +33,7 @@
             <tr>
                 <th scope="col" th:text="#{stats.chapter}"></th>
                 <th scope="col" th:text="#{stats.score}"></th>
+                <th scope="col" th:text="#{stats.avg}"></th>
                 <th scope="col" th:text="#{stats.theory.read}"></th>
             </tr>
             </thead>
@@ -40,7 +41,8 @@
             <tr th:each="result : ${statResults}">
                 <!--/*@thymesVar id="result" type="com.atl.edusoftware.data.model.Logs"*/-->
                 <td th:text="${T(com.atl.edusoftware.commons.Maps).CHAPTERS[result.chapterId]}"></td>
-                <td th:text="${result.testStats}"></td>
+                <td th:text="${result.testStats?:'N/A'}"></td>
+                <td th:text="${result.averageScore>0 ? result.testStats : 'N/A'}"></td>
                 <td th:text="${result.isTheoryRead} ? 'O' : 'X'"></td>
             </tr>
             </tbody>

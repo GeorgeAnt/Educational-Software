@@ -25,4 +25,7 @@ class Logs {
     @Column
     Boolean isTheoryRead = false
 
+    @Column
+    Double averageScore = 0.0
+
 }

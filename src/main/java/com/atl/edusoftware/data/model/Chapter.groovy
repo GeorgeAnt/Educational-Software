@@ -15,9 +15,6 @@ class Chapter {
     @NotNull
     String chapterName
 
-    @Column
-    Double averageScore = 0.0
-
     @Column(columnDefinition = "TEXT")
     String chapterTheory
 

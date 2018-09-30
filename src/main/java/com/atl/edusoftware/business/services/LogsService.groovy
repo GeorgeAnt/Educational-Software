@@ -2,6 +2,7 @@ package com.atl.edusoftware.business.services
 
 import com.atl.edusoftware.commons.Result
 import com.atl.edusoftware.data.model.Logs
+import com.atl.edusoftware.data.repository.ChapterRepository
 import com.atl.edusoftware.data.repository.LogsRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -12,6 +13,9 @@ class LogsService {
 
     @Autowired
     LogsRepository logsRepository
+
+    @Autowired
+    ChapterRepository chapterRepository
 
     void insertOrUpdateOnLogs(Logs log) {
         /**
@@ -36,7 +40,8 @@ class LogsService {
      * **/
     @Transactional
     Result handleResults(Logs log) {
-        Double totalAveragePerChapter = logsRepository?.findTotalAveragePerChapter(log.chapterId)
+        Double totalAveragePerChapter = logsRepository?.findTotalAveragePerChapter(log.chapterId) ?: 0
+        logsRepository.setAverageScore(totalAveragePerChapter, log.chapterId)
         Result result = new Result()
         result.message = ""
 

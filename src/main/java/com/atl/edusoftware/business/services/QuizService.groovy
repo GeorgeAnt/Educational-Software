@@ -25,7 +25,7 @@ class QuizService {
 
     List<Question> getQuizByChapterId(int chapterId) {
         Chapter chapter = chapterRepository.findOne(chapterId)
-        return questionRepository.findFirst3ByChapter(chapter)
+        return questionRepository.findFirst10ByChapter(chapter)
     }
 
     List<Question> getQuestionsInRandomOrder() {
@@ -42,7 +42,7 @@ class QuizService {
             }
             total++
         }
-        return decimalFormat.format(count * 100 / total) as double
+        return decimalFormat.format(count * 100 / (total - 1)) as double
     }
 
 }

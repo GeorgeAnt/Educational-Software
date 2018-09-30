@@ -70,7 +70,7 @@ class EditController {
     @PostMapping(value = '/question', params = ["edit"])
     ModelAndView getEditQuestionView(@RequestParam("questionId") Long questionId) {
         ModelAndView modelAndView = new ModelAndView()
-        modelAndView.setViewName('questionsPerChapterList')
+        modelAndView.setViewName('addQuestion')
         modelAndView.addObject('testRequest', questionService.getTestRequestByQuestionId(questionId))
         return modelAndView
     }

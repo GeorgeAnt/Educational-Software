@@ -20,4 +20,8 @@ interface LogsRepository extends CrudRepository<Logs, Long> {
     @Modifying
     @Query("UPDATE Logs SET is_theory_read = false WHERE  user_id = :userId AND chapter_id = :chapterId")
     void setIsTheoryReadToFalse(@Param("userId") Long userId, @Param("chapterId") Integer chapterId)
+
+    @Modifying
+    @Query("UPDATE Logs SET average_score = :averageScore WHERE  chapter_id = :chapterId")
+    void setAverageScore(@Param("averageScore") Double averageScore, @Param("chapterId") Integer chapterId)
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface QuestionRepository extends CrudRepository<Question, Long> {
-    List<Question> findFirst3ByChapter(Chapter chapter)//TODO remove THe TOP 3
+    List<Question> findFirst10ByChapter(Chapter chapter)
 
-    @Query(nativeQuery = true, value = "SELECT  *  FROM question as q  ORDER BY  random() LIMIT 3")
+    @Query(nativeQuery = true, value = "SELECT  *  FROM question as q  ORDER BY  random() LIMIT 10")
     List<Question> findQuestionsInRandomOrder()
 
 }

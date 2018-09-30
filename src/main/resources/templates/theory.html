@@ -1,28 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="layout :: htmlhead"></head>
 
 <body>
-<div th:fragment="navbar">
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top"><a class="navbar-brand" href="/"
-                                                                          th:text="#{nav.home}">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav ml-auto">
-                <th:block sec:authorize="isAuthenticated()">
-                    <li class="nav-item"><a class="nav-link" href="/logout" th:text="#{nav.logout}"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/dashboard" th:text="#{nav.dashboard}"></a></li>
-                </th:block>
-                <th:block sec:authorize="isAnonymous()">
-                    <li class="nav-item"><a class="nav-link" href="/login" th:text="#{nav.login}"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/registration" th:text="#{nav.register}"></a></li>
-                </th:block>
-            </ul>
-        </div>
-    </nav>
+<script th:src="@{/js/theory.js}"></script>
+<div th:include="header :: navbar"></div>
+
+<div class="text-center pull-right" style="margin-top: 60px;margin-right: 15px;">
+    <a href="javascript:void(0)" id="intro-information"><i class="fa fa-info-circle fa-3x" th:title="#{info}"></i></a>
 </div>
 
 <!--/*@thymesVar id="chapter" type="com.atl.edusoftware.data.model.Chapter"*/-->
@@ -34,7 +20,7 @@
         </div>
         <div class="row">
             <!--/*@thymesVar id="log" type="com.atl.edusoftware.data.model.Logs"*/-->
-            <a th:style="${log?.isTheoryRead ?: false}? 'display:none' : 'display:block'"
+            <a id="finished" th:style="${log?.isTheoryRead ?: false}? 'display:none' : 'display:block'"
                th:href="@{/logs/changeReadStatus(chapterId=${chapter.chapterId},isTheoryRead=true)}"
                class="btn btn-lg btn-primary btn-block my-1 ml-1 col-md-3 col-2">Finished Theory</a>
             <a th:href="@{/dashboard}" class="btn btn-lg btn-primary btn-block my-1 ml-1 col-md-2 col-1">Dahsboard</a>
